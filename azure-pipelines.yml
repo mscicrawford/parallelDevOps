@@ -47,7 +47,7 @@ stages:
 
   - job: mac
     pool:
-      vmImage: 'mscOS-latest'
+      vmImage: 'macOS-latest'
     steps:
     - checkout: fib
 
