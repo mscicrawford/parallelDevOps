@@ -116,5 +116,4 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - checkout: None
     - script: "Echo 'Completed'"
