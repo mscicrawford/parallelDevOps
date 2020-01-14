@@ -20,13 +20,14 @@ resources:
 
 stages:
 - stage: CheckBothInParallel
+  variables:
+    FIB_N: 8
   jobs:
   - job: windows
     pool:
       vmImage: 'windows-latest'
     steps:
     - checkout: winBatch
-
     - task: BatchScript@1
       displayName: "Find 3^4 using a windows batch script"
       inputs:
@@ -41,10 +42,8 @@ stages:
 
     - task: Bash@3
       displayName: "Find some stuff"
-      variables:
-        FIB_N: 8
       inputs:
-        filename: 'fib.sh'
+        filePath: 'fib.sh'
 
   - job: mac
     pool:
@@ -54,7 +53,5 @@ stages:
 
     - task: Bash@3
       displayName: "Find some stuff"
-      variables:
-        FIB_N: 8
       inputs:
-        filename: 'fib.sh'
+        filePath: 'fib.sh'
