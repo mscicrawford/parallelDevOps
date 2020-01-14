@@ -6,6 +6,18 @@
 trigger:
 - master
 
+resources:
+  repositories:
+  # The name used to reference this repository in the checkout step
+  - repository: bashCalc
+    type: github
+    endpoint: MSCICrawfordGitHub
+    name: mscicrawford/bashCalc
+  - repository: winBatch
+    type: github
+    endpoint: MSCICrawfordGitHub
+    name: mscicrawford/winBatch
+
 pool:
   vmImage: 'ubuntu-latest'
 
