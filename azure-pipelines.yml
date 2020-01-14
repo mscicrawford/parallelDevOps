@@ -18,14 +18,18 @@ resources:
     endpoint: MSCICrawfordGitHub
     name: mscicrawford/winBatch
 
-pool:
-  vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- stage: CheckBothInParallel
+  jobs:
+  - job: windows
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+    - checkout: winBatch
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - job: ubuntu
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - checkout: fib
+
