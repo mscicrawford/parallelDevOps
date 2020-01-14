@@ -27,9 +27,34 @@ stages:
     steps:
     - checkout: winBatch
 
+    - task: BatchScript@1
+      displayName: "Find 3^4 using a windows batch script"
+      inputs:
+        filename: 'power.bat'
+        arguments: '3 4'
+
   - job: ubuntu
     pool:
       vmImage: 'ubuntu-latest'
     steps:
     - checkout: fib
 
+    - task: Bash@3
+      displayName: "Find some stuff"
+      variables:
+        FIB_N: 8
+      inputs:
+        filename: 'fib.sh'
+
+  - job: mac
+    pool:
+      vmImage: 'mscOS-latest'
+    steps:
+    - checkout: fib
+
+    - task: Bash@3
+      displayName: "Find some stuff"
+      variables:
+        FIB_N: 8
+      inputs:
+        filename: 'fib.sh'
