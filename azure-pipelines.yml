@@ -59,6 +59,7 @@ stages:
 - stage: WindowsPROD
   dependsOn: InitialCheck
   condition: succeeded()
+  jobs:
   - job: windows
     pool:
       vmImage: 'windows-latest'
@@ -73,6 +74,8 @@ stages:
 - stage: UbuntuProd
   dependsOn: InitialCheck
   condition: succeeded()
+  variables:
+    FIB_N: 800
   jobs:
   - job: ubuntu
     pool:
@@ -82,14 +85,14 @@ stages:
 
     - task: Bash@3
       displayName: "Find some stuff"
-      variables:
-        FIB_N: 800
       inputs:
-        filename: 'fib.sh'
+        filePath: 'fib.sh'
 
 - stage: MacProd
   dependsOn: InitialCheck
   condition: succeeded()
+  variables:
+    FIB_N: 800
   jobs:
   - job: mac
     pool:
@@ -99,18 +102,15 @@ stages:
 
     - task: Bash@3
       displayName: "Find some stuff"
-      variables:
-        FIB_N: 800
       inputs:
-        filename: 'fib.sh'
+        filePath: 'fib.sh'
 
 - stage: Final
   dependsOn:
   - WindowsPROD
   - UbuntuProd
   - MacProd
-  condition:
-  succeeded()
+  condition: succeeded()
   jobs:
   - job: LogComplete
     pool:
