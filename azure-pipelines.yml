@@ -19,7 +19,7 @@ resources:
     name: mscicrawford/winBatch
 
 stages:
-- stage: CheckBothInParallel
+- stage: InitialCheck
   variables:
     FIB_N: 8
   jobs:
@@ -55,3 +55,66 @@ stages:
       displayName: "Find some stuff"
       inputs:
         filePath: 'fib.sh'
+
+- stage: WindowsPROD
+  dependsOn: InitialCheck
+  condition: succeeded()
+  - job: windows
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+    - checkout: winBatch
+    - task: BatchScript@1
+      displayName: "Find 30^4 using a windows batch script"
+      inputs:
+        filename: 'power.bat'
+        arguments: '30 4'
+
+- stage: UbuntuProd
+  dependsOn: InitialCheck
+  condition: succeeded()
+  jobs:
+  - job: ubuntu
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - checkout: fib
+
+    - task: Bash@3
+      displayName: "Find some stuff"
+      variables:
+        FIB_N: 800
+      inputs:
+        filename: 'fib.sh'
+
+- stage: MacProd
+  dependsOn: InitialCheck
+  condition: succeeded()
+  jobs:
+  - job: mac
+    pool:
+      vmImage: 'macOS-latest'
+    steps:
+    - checkout: fib
+
+    - task: Bash@3
+      displayName: "Find some stuff"
+      variables:
+        FIB_N: 800
+      inputs:
+        filename: 'fib.sh'
+
+- stage: Final
+  dependsOn:
+  - WindowsPROD
+  - UbuntuProd
+  - MacProd
+  condition:
+  succeeded()
+  jobs:
+  - job: LogComplete
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - checkout: None
+    - script: "Echo 'Completed'"
