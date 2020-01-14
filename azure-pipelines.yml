@@ -18,7 +18,7 @@ resources:
     endpoint: MSCICrawfordGitHub
     name: mscicrawford/winBatch
 
-
+stages:
 - stage: CheckBothInParallel
   jobs:
   - job: windows
