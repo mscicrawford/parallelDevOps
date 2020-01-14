@@ -9,10 +9,10 @@ trigger:
 resources:
   repositories:
   # The name used to reference this repository in the checkout step
-  - repository: bashCalc
+  - repository: fib
     type: github
     endpoint: MSCICrawfordGitHub
-    name: mscicrawford/bashCalc
+    name: mscicrawford/fib
   - repository: winBatch
     type: github
     endpoint: MSCICrawfordGitHub
