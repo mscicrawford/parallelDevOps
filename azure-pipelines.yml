@@ -36,7 +36,7 @@ stages:
 
   - job: ubuntu
     pool:
-      name: 'default'
+      name: 'Default'
     steps:
     - checkout: fib
 
